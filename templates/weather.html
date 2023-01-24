@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Weather App</title>
+    <style>
+        /* Night time */
+        .h1-color-night {
+            color: #01031d;
+        }
+
+        /* Day time */
+        .h1-color-day {
+            color: #e9f3ab;
+        }
+
+        /* Sunrise / Sunset */
+        .h1-color-sunrise-sunset {
+            color: #ff4d00;
+        }
+
+        h1 {
+            /* Other styles go here */
+            text-stroke: 1px black;
+            -webkit-text-stroke: 1px black;
+          }
+
+          table {
+            border-collapse: collapse;
+          }
+
+          body {
+            font-family: "Mona-sans", Arial, sans-serif;
+          }
+
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="h1-color-day">Weather for {{ weather_data['name'] }}, {{ weather_data['sys']['country'] }}</h1>
+        <table class="table table-bg-day">
+            <col style="width: 32.5%">
+            <col style="width: 70%">
+            <tbody>
+                <tr>
+                    <th scope="row">Temperature</th>
+                    <td>{{ weather_data['main']['temp']|int }}°C</td>
+                </tr>
+                <tr>
+                    <th scope="row">Humidity</th>
+                    <td>{{ weather_data['main']['humidity'] }}%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pressure</th>
+                    <td>{{ weather_data['main']['pressure'] }} hPa</td>
+                </tr>
+                <tr>
+                    <th scope="row">Minimum temperature</th>
+                    <td>{{ weather_data['main']['temp_min']|int }}°C</td>
+                </tr>
+                <tr>
+                    <th scope="row">Maximum temperature</th>
+                    <td>{{ weather_data['main']['temp_max']|int }}°C</td>
+                </tr>
+                <tr>
+                    <th scope="row">Wind speed</th>
+                    <td>{{ weather_data['wind']['speed'] }} m/s</td>
+                </tr>
+                <tr>
+                    <th scope="row">Description</th>
+                    <td>{{ weather_data['weather'][0]['description'] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script>
+        // Get the table element
+        var table = document.querySelector('.h1');
+
+        // Set the initial background color based on the current time
+        setH1Color();
+
+        // Update the background color every
+        setInterval(setH1Color, 3600 * 1000);
+
+        function setH1Color() {
+            // Get the current time
+            var now = new Date();
+            var hour = now.getHours();
+
+            // Check the current time of day
+            if (hour >= 6 && hour < 18) {
+                // Day time (6 AM to 6 PM)
+                h1.classList.remove('h1-color-night', 'h1-color-sunrise-sunset');
+                h1.classList.add('h1-color-day');
+            } else if (hour >= 18 && hour < 21 || hour >= 21 && hour < 6) {
+                // Sunrise / Sunset (6 PM to 9 PM or 9 PM to 6 AM)
+                h1.classList.remove('h1-color-day', 'h1-color-night');
+                h1.classList.add('h1-color-sunrise-sunset');
+            } else {
+                // Night time (9 PM to 6 AM)
+                h1.classList.remove('h1-color-day', 'h1-color-sunrise-sunset');
+                h1.classList.add('h1-color-night');
+            }
+        }
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
