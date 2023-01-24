@@ -2,13 +2,13 @@ import os, json
 from flask import Flask, request, jsonify, render_template
 import requests
 
-if not os.path.exists("Weather App\config.json"):
+if not os.path.exists("config.json"):
     print("config.json is missing. Please create it.")
     print("Exiting...")
     exit(1)
 
 # Read config.json
-with open("Weather App\config.json", "r") as f:
+with open("config.json", "r") as f:
     config = json.load(f)
     # Check if email & password are in config.json
     if "API_KEY" not in config:
